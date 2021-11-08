@@ -6,6 +6,8 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\User;
+
 
 class CategoryController extends Controller
 {
@@ -26,9 +28,9 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(StoreCategoryRequest $request)
-    {
-        $category = Category::create($request->validated());
-        return $category;
+    {   
+        $category =auth()->user()->categories()->create($request->validated());
+        return new CategoryResource($category);
     }
 
     /**
